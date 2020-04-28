@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>{{ title }}</title>		
+        
 		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon/favicon.ico') }}" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" media="screen">
@@ -15,7 +16,12 @@
         
 		<style type="text/css">
 			.nav-wrapper{
-				background: white;  		
+				background: white;
+                position: relative;
+        top: auto;
+                max-height: none;
+ 
+                
 			}er:2px solid white;
 			}
 			.center-cols > .col {
@@ -35,19 +41,33 @@
                 background-color: red;
                 
             }
+            .body{
+                margin:0;
+ 
+            }
+            .center{
+    animation:blinkingText 1.2s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: #000;    }
+    49%{    color: #000; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #000;    }
+}
 		</style>
 	</head>
     
 	<body class="white">
 		<nav>
 		<div class="nav-wrapper">
-		  <a href="#" class="brand-logo center"><span class="light-blue-text text-darken-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SARS-CoV-2_without_background.png/330px-SARS-CoV-2_without_background.png" width="45" alt="" class="d-inline-block align-middle mr-2"><span class="text-uppercase font-weight-bold">COVID-19 India Tracker</span></span></a>
+		  <a href="#" class="brand-logo center"><span class="light-blue-text text-darken-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SARS-CoV-2_without_background.png/330px-SARS-CoV-2_without_background.png" width="30" alt="" class="d-inline-block align-middle "><span class="text-uppercase font-weight-bold">COVID-19 Tracker</span></span></a>
             
 		</div>
 		</nav>
         <!---Test--->
         
-    
+    <h5 class="center"> NOTE:- For Better Experience view in Desktop Mode !</h5>
          
         <!---Test--->
         <div class="row center-align" style="margin-top:20px">
@@ -117,14 +137,16 @@
 	      </div>
     	</div>
         
-        <div class="col">
+      
+        <div class="col-md-6 col-md-offset-3">
 			<div class="card white darken-4">
 			        <div class="card-content black-text center-align">
 			          <span class="card-title">Total Cases in India(state Wise)</span>
-			              	<canvas id="cases_chart" width="500" height="200"></canvas>
+			              	<canvas id="cases_chart" width="600" height="400"></canvas>
 			        </div>
 			      </div>
 	      </div>
+        
         <!-- Bar Graphs-->
     	<div class="row center-align row-cols-2">
 	      
@@ -161,7 +183,7 @@
                 <h5 class="white-text center-align">Be Safe!</h5>
                 <ul>
                 	<li>Social Distancing is the key!<span class="ec ec-key"></span></li>
-                	<li>Wash Hands, Sanitize your surroundings.<span class="ec ec-wave"></span></a></li>
+                	<li>Wash Hands, Sanitize your surroundings.<span class="ec ec-wave"></span><</li>
                 </ul>
               </div>
             </div>
@@ -172,10 +194,9 @@
             <a class="grey-text text-lighten-4 right" href="https://github.com/ankushop2/CoVID19DashBoard" target="_blank">Ofc, it's Open Source!<span class='ec ec-sparkling-heart'></span></a>
             </div>
           </div>
-    
-    
- 	
+
 	</body>
+
 
 	<script type="text/javascript">
 			$('.num').each(function () {
