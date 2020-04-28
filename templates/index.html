@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{ title }}</title>		
+		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon/favicon.ico') }}" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" media="screen">
+		<link href="{{ url_for('static', filename='js/materialize.js') }}" rel="stylesheet" media="screen">		
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
+		<link rel='stylesheet' href='https://unpkg.com/emoji.css/dist/emoji.min.css'>
+
+        
+		<style type="text/css">
+			.nav-wrapper{
+				background: white;  		
+			}er:2px solid white;
+			}
+			.center-cols > .col {
+			  float:none; /* disable the float */
+			  display: inline-block; /* make blocks inline-block */
+			  text-align: initial; /* restore text-align to default */
+			}/*
+			#custom-height{
+				height: 400px;
+			}*/
+			#flex:{
+				display: flex;
+			}
+            /*Test */
+            .fas fa-heart{
+                color: red;
+                background-color: red;
+                
+            }
+		</style>
+	</head>
+    
+	<body class="white">
+		<nav>
+		<div class="nav-wrapper">
+		  <a href="#" class="brand-logo center"><span class="light-blue-text text-darken-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SARS-CoV-2_without_background.png/330px-SARS-CoV-2_without_background.png" width="45" alt="" class="d-inline-block align-middle mr-2"><span class="text-uppercase font-weight-bold">COVID-19 India Tracker</span></span></a>
+            
+		</div>
+		</nav>
+        <!---Test--->
+        
+    
+         
+        <!---Test--->
+        <div class="row center-align" style="margin-top:20px">
+	      <div class="col s12 m4">
+			<div class="card orange darken-4">
+			        <div class="card-content white-text">
+			          <span class="card-title">Total Cases in India</span>
+			          <h2><span class="num">{{ total }}</span></h2>
+			        </div>
+			      </div>
+	      </div>
+	      <div class="col s12 m4">
+			<div class="card green darken-4">
+			        <div class="card-content white-text">
+			          <span class="card-title">Total Cured in India</span>
+			          <h2><span class="num">{{ stats_list[1] }}</span></h2>
+			        </div>
+			      </div>
+	      </div>
+	      <div class="col s12 m4">
+			<div class="card red darken-4">
+			        <div class="card-content white-text">
+			          <span class="card-title">Total Deaths in India</span>
+			          <h2><span class="num">{{ stats_list[2] }}</span></h2>
+			        </div>
+			      </div>
+	      </div>
+    	</div>
+        <!--Top numbers-->
+    
+    
+        <!Prediction for next days-->
+        
+    	<div class="row center-cols center-align" id="flex">
+	      <div class="col s12 m6">
+			<div class="card white darken-4 medium" >
+			        <div class="card-content black-text">
+			          <span class="card-title"><b>Predictions for the next 5 days</b></span>
+			          <table class="table responsive centered">
+			          	<thead class="center-align">
+			          		<tr>
+			          			<td class="center-align"> <h5>Dates</h5></td>
+			          			<td class="center-align"> <h5>Predicted Number</h5></td>
+			          		</tr>
+			          	</thead>
+			          	<tbody class="center-align">
+			          	{% for row_index in range(dates|count) %}
+   							 <tr>
+						      <td>{{ dates[row_index].strftime('%d/%m/%Y') }}</td>
+						      <td>{{ days_pred[row_index] }}</td>
+						    </tr>
+						{% endfor %}
+						</tbody>
+			          </table>
+			        </div>
+			      </div>
+	      </div>
+            
+            <!--Actual Vs Predicted-->
+	      <div class="col s12 m6">
+			<div class="card white darken-4 medium">
+			        <div class="card-content black-text">
+			          <span class="card-title">Actual vs. Predicted</span>
+			          	 <canvas id="barandline" width="600" height="270%"></canvas>
+			        </div>
+			      </div>
+	      </div>
+    	</div>
+        
+        <div class="col">
+			<div class="card white darken-4">
+			        <div class="card-content black-text center-align">
+			          <span class="card-title">Total Cases in India(state Wise)</span>
+			              	<canvas id="cases_chart" width="500" height="200"></canvas>
+			        </div>
+			      </div>
+	      </div>
+        <!-- Bar Graphs-->
+    	<div class="row center-align row-cols-2">
+	      
+	      <div class="col">
+			<div class="card white darken-4">
+			        <div class="card-content black-text center-align">
+			          <span class="card-title">Total Cured in India(State Wise)</span>
+			        	<canvas id="cured_chart" width="600" height="400"></canvas>
+			      </div>
+	      </div>
+	  </div>
+	      <div class="col">
+			<div class="card white darken-4">
+			        <div class="card-content black-text center-align">
+			          <span class="card-title">Total Deaths in India(State Wise)</span>
+			        	<canvas id="death_chart" width="600" height="400"></canvas>
+			      </div>
+	      </div>
+	  </div>
+</div>
+        <!-- Data Sources-->
+<footer class="page-footer blue-grey darken-3">
+          <div class="container">
+            <div class="row">
+              <div class="col s12 m6">
+                <h5 class="white-text center-align">Data Sources</h5>
+                <ul>
+                	<li>Daily Data: <a href="https://www.mohfw.gov.in/" target="_blank">Ministry of Health and Family Welfare</a></li>
+                	<li>Past Data: <a href="https://github.com/pomber/covid19" target="_blank">GitHub</a></li>
+                	
+                </ul>
+              </div>
+              <div class="col s12 m6">
+                <h5 class="white-text center-align">Be Safe!</h5>
+                <ul>
+                	<li>Social Distancing is the key!<span class="ec ec-key"></span></li>
+                	<li>Wash Hands, Sanitize your surroundings.<span class="ec ec-wave"></span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright black">
+            <div class="container">
+            Made by Rahul Nampally <span class="ec ec-space-invader"></span>
+            <a class="grey-text text-lighten-4 right" href="https://github.com/ankushop2/CoVID19DashBoard" target="_blank">Ofc, it's Open Source!<span class='ec ec-sparkling-heart'></span></a>
+            </div>
+          </div>
+    
+    
+ 	<!-- Default Statcounter code for Cov19in.herokuapp.com
+https://cov19in.herokuapp.com/ -->
+<script type="text/javascript">
+var sc_project=12224600; 
+var sc_invisible=1; 
+var sc_security="8cb43734"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - StatCounter" href="https://statcounter.com/"
+target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/12224600/0/8cb43734/1/"
+alt="Web Analytics Made Easy -
+StatCounter"></a></div></noscript>
+<!-- End of Statcounter Code -->
+	</body>
+
+	<script type="text/javascript">
+			$('.num').each(function () {
+		  var $this = $(this);
+		  jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+		    duration: 2000,
+		    easing: 'swing',
+		    step: function () {
+		      $this.text(Math.ceil(this.Counter));
+		    }
+		  });
+		});
+	</script>
+<script>
+    
+ 
+    
+var ctx = document.getElementById('cases_chart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ state_list|tojson }},
+        datasets: [{
+            label: 'No.of cases',
+            data: {{ confirmed_list|tojson }},
+            backgroundColor:{{ color|tojson }},
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+	    	display: false
+	    }
+    }
+});
+</script>
+<script>
+var ctx = document.getElementById('cured_chart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ state_list|tojson }},
+        datasets: [{
+            label: 'No.of Cases',
+            data: {{ cured_list|tojson }},
+            backgroundColor: {{ color|tojson }},
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+	    	display: false
+	    }
+    }
+	    
+});
+</script>
+<script>
+var ctx = document.getElementById('death_chart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ state_list|tojson }},
+        datasets: [{
+            label: 'No.of cases',
+            data: {{ death_list|tojson }},
+            backgroundColor: {{ color|tojson }},
+            borderWidth: 1
+        }]
+    },
+    options: {
+    
+        legend: {
+	    	display: false,
+                        fontColor:"black",
+	    }
+    }
+	    
+});
+</script>
+<script>
+var ctx = document.getElementById('barandline');
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: {{ x }},
+    datasets: [{ 
+        data: {{ y }},
+        label: "Actual",
+        borderColor: "blue",
+        fill: false,
+        pointRadius: 0
+      }, { 
+        data: {{ y_pred }},
+        label: "Predicted",
+        borderColor: "red",
+        fill: false,
+        pointRadius: 0
+      }
+    ]
+  },
+  options: {
+  	responsive: true,
+  	legend: {
+	    	display: true,
+	    	position: 'top',
+	    	labels: {
+        		fontColor: "#ffffff",
+      		}
+	    },
+    scales:{
+    	xAxes:[{
+    		ticks:{
+    			display: false
+    		}
+    	}],
+    	yAxes:[{
+    		ticks:{
+    			min:0,
+    			fontColor: "black"
+    		}
+    	}]
+    }
+  }
+});
+</script>
+</html>
