@@ -8,6 +8,10 @@
         
 		<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon/favicon.ico') }}" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
 		<link href="{{ url_for('static', filename='css/materialize.min.css') }}" rel="stylesheet" media="screen">
 		<link href="{{ url_for('static', filename='js/materialize.js') }}" rel="stylesheet" media="screen">		
 		<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
@@ -15,6 +19,9 @@
 
         
 		<style type="text/css">
+.fas fa-home{
+color:white;
+}
 			.nav-wrapper{
 				background: white;
                 position: relative;
@@ -174,24 +181,27 @@
               <div class="col s12 m6">
                 <h5 class="white-text center-align">Data Sources</h5>
                 <ul>
-                	<li>Daily Data: <a href="https://www.mohfw.gov.in/" target="_blank">Ministry of Health and Family Welfare</a></li>
-                	<li>Past Data: <a href="https://github.com/pomber/covid19" target="_blank">GitHub</a></li>
+                	<li>Data Source: <a href="https://www.mohfw.gov.in/" target="_blank">Ministry of Health and Family Welfare</a></li>
+                	
                 	
                 </ul>
               </div>
               <div class="col s12 m6">
                 <h5 class="white-text center-align">Be Safe!</h5>
                 <ul>
-                	<li>Social Distancing is the key!<span class="ec ec-key"></span></li>
-                	<li>Wash Hands, Sanitize your surroundings.<span class="ec ec-wave"></span><</li>
+                	<li>keep a safe distance 🧍↔️🧍</li>
+                	<li>Wash Hands often  🤲</li>
+			<li>Stay Home Stay Safe 🧍🏠</li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="footer-copyright black">
             <div class="container">
-            Made by Rahul Nampally <span class="ec ec-space-invader"></span>
-            <a class="grey-text text-lighten-4 right" href="https://github.com/ankushop2/CoVID19DashBoard" target="_blank">Ofc, it's Open Source!<span class='ec ec-sparkling-heart'></span></a>
+            Made by Rahul Nampally <i class="fas fa-laptop-code"></i>
+
+</span>
+            
             </div>
           </div>
 
@@ -304,7 +314,7 @@ var myChart = new Chart(ctx, {
 	    	display: true,
 	    	position: 'top',
 	    	labels: {
-        		fontColor: "#ffffff",
+        		fontColor: "black",
       		}
 	    },
     scales:{
