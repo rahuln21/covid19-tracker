@@ -23,10 +23,7 @@ def init():
 	dates = []
 	for i in range(5):
 		dates.append(now+datetime.timedelta(days=i))
-	# return render_template('index.html', title='COVID-19 India Dashboard', x=x_actual, y=y.tolist(), y_pred=y_pred.tolist(), days_pred=days_pred,
-	#  actual_poly=actual_poly, actual_data=actual_data, confirmed_india=confirmed_india, confirmed_foreign=confirmed_foreign,
-	#   confirmed_cured=confirmed_cured, confirmed_deaths=confirmed_deaths, confirmed_data=confirmed_data, cured_data=cured_data, death_data=death_data,
-	#   state_list=state_list, color=color, dates=dates)
+	
 	return render_template('index.html', title='COVID-19 India Tracker', x=x_actual, y=y.tolist(), y_pred=y_pred.tolist(), days_pred=days_pred,
 	   color=color, dates=dates, state_list=state_list, stats_list=stats_list, confirmed_list=confirmed_list, cured_list=cured_list, death_list=death_list,total=(int(stats_list[0])+int(stats_list[1])+int(stats_list[2])))
 
