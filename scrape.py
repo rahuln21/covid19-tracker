@@ -37,5 +37,5 @@ def scrape_now():
 			state_list.append(col[1].getText())
 			confirmed_list.append(int(col[2].getText()))
 			cured_list.append(int(col[3].getText()))
-			#death_list.append(int(col[4].getText()))
+			death_list.append(int(col[4].getText()))
 	return stats_list, state_list, confirmed_list, cured_list, death_list
